@@ -1,0 +1,17 @@
+{
+  "name": "tinymce-nuxt",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.0",
+    "@tinymce/tinymce-vue": "^3.2.3",
+    "nuxt": "^2.14.0"
+  },
+  "devDependencies": {}
+}
