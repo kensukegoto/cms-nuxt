@@ -3,7 +3,7 @@
     <editor
       :api-key="apiKey"
       :init="init"
-      :initialValue="makeContent"
+      :initialValue="content"
       @onKeyUp="handlerFunction"
       @onExecCommand="handlerFunction"
     />
@@ -30,15 +30,8 @@ export default {
       this.$emit("doUpdate",content);
     }
   },
-  computed: {
-    makeContent : self => {
-      const tag = self.tag;
-      const className = self.className;
-      const content = self.content;
-      return `<${tag} class="${className}">${content}</${tag}>`
-    }
-  },
-  props: ["content","tag","className"],
+
+  props: ["content"],
   data:()=>{
     return {
       apiKey: "83f6028mdsd8lezuso3wtuct3gyk5uwd1rccqrp2s5eaxl5w", 
