@@ -35,6 +35,7 @@
 import draggable from 'vuedraggable'
 import doSave from "~/assets/js/doSave";
 import initData from "~/assets/js/initData"
+import myData from "~/assets/js/data"
 export default {
 
   components:{
@@ -43,11 +44,7 @@ export default {
 
   data: () => {
 
-    const data = initData([
-      {"block":0,"tag":"p","class":"","content":"中東における、金融や物流の中心地ドバイ。"},
-      {"block":0,"tag":"p","class":"bgBlue","content":"上東における、金融や物流の中心地ドバイ。"},
-      {"block":1,"tag":"h2","class":"","content":"「外国頼み」からの脱却 イスラエルがカギ握る？"},
-    ]);
+    const data = initData(myData);
 
     return {
       data
