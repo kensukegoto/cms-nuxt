@@ -1,35 +1,23 @@
 <template>
   <div id="app">
-    <editor
-      api-key="83f6028mdsd8lezuso3wtuct3gyk5uwd1rccqrp2s5eaxl5w"
-      :init="init"
+    <TextArea 
+      v-for="(item,key) of data"
+      :key="key"
+      :content="item.content"
+      :tag="item.tag"
+      :className="item.class"
     />
   </div>
 </template>
 
 <script>
-import Editor from '@tinymce/tinymce-vue'
- export default {
-   name: 'app',
-   components: {
-     'editor': Editor
-   },
-   data:()=>{
-     return {
-       init: {
-        height: 500,
-        menubar: false,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar:
-          'undo redo | formatselect | bold italic backcolor | \
-          alignleft aligncenter alignright alignjustify | \
-          bullist numlist outdent indent | removeformat | help'
-      }
-     }
-   }
- }
+export default {
+  data: () => {
+    return {
+      data : [
+        {"block":1,"tag":"p","class":"","content":"中東における、金融や物流の中心地ドバイ。"}
+      ]
+    }
+  }
+}
 </script>
