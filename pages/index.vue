@@ -67,7 +67,44 @@ export default {
       this.data[index].update = value
     },
     doSave(){
-      console.log(this.data);
+
+      const savedData = this.data
+        .filter(item => {
+          return item.update.trim() !== "";
+        })
+        .reduce((acc,content,block) => {
+
+          const nodes = createHTML(content.update);
+
+          if(nodes.length !== 0 ) {
+            [...nodes].forEach(item => {
+              acc.push({
+                block,
+                tag: item.tagName.toLowerCase(),
+                class: item.className,
+                content: item.innerHTML,
+                // encode: escape(item.innerHTML)
+              })
+            })
+
+            return acc;
+          }
+
+          acc.push({
+            block,
+            tag: content.type.toLowerCase(),
+            class: "",
+            content: content.update,
+            // encode: escape(item.innerHTML)
+          })
+
+          return acc;
+
+
+        },[]);
+
+        console.log(savedData);
+
     },
     addText(){
       this.data = [...this.data,{ type: "text", content: "", update: "" }]
@@ -112,7 +149,7 @@ function shapeData(data){
       value += `${block.content}`;
     }
 
-    list.push({ type, content: value, update: "" });
+    list.push({ type, content: value, update: value });
     return list;
 
   },[])
@@ -120,6 +157,13 @@ function shapeData(data){
   return blocks;
 
 }
+
+function createHTML(str){
+  const tempEl = document.createElement('div');
+  tempEl.innerHTML = str;
+  return tempEl.querySelectorAll(":scope > *");
+}
+
 </script>
 
 <style scoped>
