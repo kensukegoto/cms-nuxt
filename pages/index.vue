@@ -9,7 +9,7 @@
     <section id="tools" class="b-tools">
       <ul class="m-tools">
         <li class="item"><a class="btn btn--add-title">タイトル追加</a></li>
-        <li class="item"><a class="btn btn--add-text">テキスト追加</a></li>
+        <li class="item"><a class="btn btn--add-text" @click="addText">テキスト追加</a></li>
         <li class="item"><a class="btn btn--save" @click="doSave">保存</a></li>
       </ul>
     </section>
@@ -37,6 +37,9 @@ export default {
     },
     doSave(){
       console.log(this.data);
+    },
+    addText(){
+      this.data = [...this.data,{ content: "", update: "" }]
     }
   }
 }
