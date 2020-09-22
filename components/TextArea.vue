@@ -4,6 +4,8 @@
       :api-key="apiKey"
       :init="init"
       :initialValue="makeContent"
+      @onKeyUp="handlerFunction"
+      @onExecCommand="handlerFunction"
     />
   </div>
 </template>
@@ -15,6 +17,18 @@ export default {
   name: 'app',
   components: {
     'editor': Editor
+  },
+  methods: {
+
+    handlerFunction(event,editor){
+      let content;
+      if(event.type === "keyup"){
+        content = event.target.innerHTML;
+      } else {
+        content = event.target.contentDocument.body.innerHTML;
+      }
+      this.$emit("doUpdate",content);
+    }
   },
   computed: {
     makeContent : self => {
@@ -70,8 +84,8 @@ export default {
                   text: '無',
                   icon: 'bgNone',
                   onAction: function (_) {
-                    editor.formatter.remove('bgRed');
-                    editor.formatter.remove('bgBlue');
+                    editor.execCommand("RemoveFormat",null,"bgRed");
+                    editor.execCommand("RemoveFormat",null,"bgBlue");
                   },
                   onSetup: function(api) {
                     return function() {};
@@ -82,8 +96,8 @@ export default {
                   text: '青',
                   icon: 'bgBlue',
                   onAction: function (_) {
-                    editor.formatter.remove('bgRed');
-                    editor.formatter.toggle('bgBlue');
+                    editor.execCommand("RemoveFormat",null,"bgRed");
+                    editor.execCommand("mceToggleFormat",null,"bgBlue");
                   },
                   onSetup: function(api) {
                     return function() {};
@@ -94,8 +108,8 @@ export default {
                   text: '赤',
                   icon: 'bgRed',
                   onAction: function (_) {
-                    editor.formatter.remove('bgBlue');
-                    editor.formatter.toggle('bgRed');
+                    editor.execCommand("RemoveFormat",null,"bgBlue");
+                    editor.execCommand("mceToggleFormat",null,"bgRed");
                   },
                   onSetup: function(api) {
                     return function() {};
