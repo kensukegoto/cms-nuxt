@@ -22,6 +22,7 @@ export default {
 
     doUpdate(e){
       let files = e.target.files || e.dataTransfer.files;
+      if(files.length === 0) return;
       let reader = new FileReader();
 
       reader.onload = (e) => {
