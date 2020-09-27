@@ -18,6 +18,11 @@
             @doUpdate="e => {doUpdate(e,key)}"
             @changeRadio="e => {changeRadio(e,key)}"
           />
+          <ImageArea 
+            v-if="/img/.test(item.type)"
+            :item="item"
+          />
+
         </div>
       </li>
     </draggable>
@@ -25,6 +30,7 @@
       <ul class="m-tools">
         <li class="item"><a class="btn btn--add-title" @click="addTitle">タイトル追加</a></li>
         <li class="item"><a class="btn btn--add-text" @click="addText">テキスト追加</a></li>
+        <li class="item"><a class="btn btn--add-image" @click="addImage">画像追加</a></li>
         <li class="item"><a class="btn btn--save" @click="doSave">保存</a></li>
       </ul>
     </section>
@@ -65,6 +71,9 @@ export default {
     },
     addTitle(){
       this.data = [...this.data,{ type: "h2", content: "", update: "" }]
+    },
+    addImage(){
+      this.data = [...this.data,{ type: "img", content: "", update: "" }]
     },
     changeRadio(value,index){
       this.data[index].type = value
