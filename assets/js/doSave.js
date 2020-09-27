@@ -33,7 +33,13 @@ export default data => {
 
   },[]);
 
-  return savedData;
+  let formData = new FormData();
+  formData = savedData.reduce((form,item) => {
+    form.append(item.name,item.content);
+    return form;
+  },formData);
+  
+  return formData;
 }
 
 function createHTML(str){
