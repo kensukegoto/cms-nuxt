@@ -10,25 +10,23 @@ export default data => {
 
     if(nodes.length !== 0 ) {
       [...nodes].forEach(item => {
+        const className = item.className ? `__${item.className}` : "";
         acc.push({
-          block,
-          tag: item.tagName.toLowerCase(),
-          class: item.className,
-          content: item.innerHTML,
-          // encode: escape(item.innerHTML)
+          name:`${item.tagName.toLowerCase()}__${block}${className}`,
+          content: item.innerHTML
         })
       })
 
       return acc;
     }
 
+    const className = content.className ? `__${content.className}` : "";
     acc.push({
-      block,
-      tag: content.type.toLowerCase(),
-      class: "",
-      content: content.update,
-      // encode: escape(item.innerHTML)
+      name:`${content.type.toLowerCase()}__${block}${className}`,
+      content: content.update
     })
+
+
 
     return acc;
 
