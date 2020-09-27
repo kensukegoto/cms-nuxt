@@ -53,7 +53,7 @@ export default {
   },
   methods:{
     doUpdate(value,index){
-      this.data[index].update = value
+      this.data[index].content = value
     },
     doSave(){
       const data = doSave(this.data);

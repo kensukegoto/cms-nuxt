@@ -6,7 +6,7 @@ export default data => {
   })
   .reduce((acc,content,block) => {
 
-    const nodes = createHTML(content.update);
+    const nodes = createHTML(content.content);
 
     if(nodes.length !== 0 ) {
       [...nodes].forEach(item => {
