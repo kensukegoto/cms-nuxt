@@ -21,6 +21,7 @@
           <ImageArea 
             v-if="/img/.test(item.type)"
             :item="item"
+            @doUpdateImage="e => {doUpdateImage(e,key)}"
           />
 
         </div>
@@ -65,6 +66,10 @@ export default {
       const data = doSave(this.data);
       console.log(data);
 
+    },
+    doUpdateImage(e,index){
+      this.data[index].content = e.base64;
+      // this.list[index].updated = e.file;
     },
     addText(){
       this.data = [...this.data,{ type: "text", content: "", update: "" }]

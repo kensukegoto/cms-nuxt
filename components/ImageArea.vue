@@ -8,7 +8,7 @@
     </figure>
     <div class="imageArea__upload">
       <p>
-        <input type="file">
+        <input type="file" @change="e => { doUpdate(e) }">
         <span>ファイルを選択</span>
       </p>
     </div>
@@ -21,7 +21,16 @@ export default {
   methods:{
 
     doUpdate(e){
-      this.$emit("doUpdate",e);
+      let files = e.target.files || e.dataTransfer.files;
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        // base64の画像
+        this.$emit("doUpdateImage",{
+          base64: e.target.result,file: files[0]
+        })
+      };
+      reader.readAsDataURL(files[0]);
     }
   }
 }
