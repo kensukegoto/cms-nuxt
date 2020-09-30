@@ -52,7 +52,6 @@ export default {
   data: () => {
 
     const data = initData(myData);
-
     return {
       data
     }
@@ -64,20 +63,18 @@ export default {
     },
     doSave(){
       const data = doSave(this.data);
-      // for (let d of data.entries()) {
-      //   console.log(`${d[0]}: ${d[1]}`);
-      // }
+      for (let d of data.entries()) {
+        console.log(`${d[0]}: ${d[1]}`);
+      }
       const config = {　headers: {'content-type': 'multipart/form-data'}}
       this.$axios.$post("/update",data,config)
         .then(res => {
           console.log(res)
         })
-
     },
     doUpdateImage(e,index){
       this.data[index].content = e.base64;
-
-      // this.list[index].updated = e.file;
+      this.data[index].file = e.file;
     },
     addText(){
       this.data = [...this.data,{ type: "text", content: "", update: "" }]

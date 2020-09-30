@@ -29,7 +29,7 @@ export default data => {
       value += `${block.content}`;
     }
 
-    list.push({ type, content: value, update: value });
+    list.push({ type, content: value, file: null });
     return list;
 
   },[])

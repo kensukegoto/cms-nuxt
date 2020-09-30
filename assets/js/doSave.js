@@ -2,10 +2,10 @@ export default data => {
 
   const savedData = data
   .filter(item => {
-    return item.update.trim() !== "";
+    return item.content.trim() !== "";
   })
   .reduce((acc,content,block) => {
-
+    console.log(content.content);
     const nodes = createHTML(content.content);
 
     if(nodes.length !== 0 ) {
@@ -20,16 +20,28 @@ export default data => {
       return acc;
     }
 
+    if(content.file) {
+
+      acc.push({
+        name:`${content.type.toLowerCase()}__${block}`,
+        content: ""
+      })
+
+      acc.push({
+        name: "imgPath",
+        content: content.file
+      })
+
+      return acc;
+    }
+
     const className = content.className ? `__${content.className}` : "";
     acc.push({
       name:`${content.type.toLowerCase()}__${block}${className}`,
-      content: content.update
+      content: content.content
     })
 
-
-
     return acc;
-
 
   },[]);
 
