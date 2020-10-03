@@ -1,4 +1,4 @@
-export default data => {
+export default (data,page) => {
 
   const savedData = data
   .filter(item => {
@@ -44,6 +44,8 @@ export default data => {
     return acc;
 
   },[]);
+
+  savedData.push({ name: "filename" , content: page })
 
   let formData = new FormData();
   formData = savedData.reduce((form,item) => {

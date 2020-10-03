@@ -63,13 +63,15 @@ export default {
     },
     async doSave(){
 
-      const data = doSave(this.data);
+      const page = "";
+      
+      const data = doSave(this.data,page);
       for (let d of data.entries()) {
         console.log(`${d[0]}: ${d[1]}`);
       }
       const config = {　headers: {'content-type': 'multipart/form-data'}}
       const res = await this.$axios.$post("/update",data,config)
-      this.data = initData(res.body.item);
+      this.data = initData(res.body.item.data);
 
     },
     doUpdateImage(e,index){
