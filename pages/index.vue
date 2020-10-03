@@ -61,18 +61,16 @@ export default {
     doUpdate(value,index){
       this.data[index].content = value
     },
-    doSave(){
+    async doSave(){
+
       const data = doSave(this.data);
       for (let d of data.entries()) {
         console.log(`${d[0]}: ${d[1]}`);
       }
-
       const config = {　headers: {'content-type': 'multipart/form-data'}}
-      this.$axios.$post("/update",data,config)
-        .then(res => {
-          console.log(res)
-        })
-        
+      const res = await this.$axios.$post("/update",data,config)
+      this.data = initData(res.body.item);
+
     },
     doUpdateImage(e,index){
       this.data[index].content = e.base64;

@@ -24,10 +24,10 @@ export default data => {
         });
       }
 
-    } else if (/h2|h3/.test(block.tag)){
+    } else if (/h2|h3|img/.test(block.tag)){
       type = block.tag;
       value += `${block.content}`;
-    }
+    } 
 
     list.push({ type, content: value, file: null });
     return list;
