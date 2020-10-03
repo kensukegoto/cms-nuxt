@@ -5,7 +5,7 @@ export default data => {
     return item.content.trim() !== "";
   })
   .reduce((acc,content,block) => {
-    console.log(content.content);
+
     const nodes = createHTML(content.content);
 
     if(nodes.length !== 0 ) {

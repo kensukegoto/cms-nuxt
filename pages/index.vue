@@ -66,11 +66,13 @@ export default {
       for (let d of data.entries()) {
         console.log(`${d[0]}: ${d[1]}`);
       }
+
       const config = {　headers: {'content-type': 'multipart/form-data'}}
       this.$axios.$post("/update",data,config)
         .then(res => {
           console.log(res)
         })
+        
     },
     doUpdateImage(e,index){
       this.data[index].content = e.base64;

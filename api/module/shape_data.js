@@ -3,10 +3,19 @@ module.exports = res => {
 
   // 受け取ったデータを整形
   let body = res.req.body;
-  body = Object.keys(body).map(k => {
+  body = Object.keys(body).reduce((acc,k) => {
+
     const [tag,block,className] = k.split("__");
-    return { tag, block, class: className || "", content : body[k]}
-  });
+
+    if(Array.isArray(body[k])){
+      body[k].forEach(item => {
+        acc.push({ tag, block, class: className || "", content : item})
+      })
+    } else {
+      acc.push({ tag, block, class: className || "", content : body[k]})
+    }
+    return acc;
+  },[]);
 
   // 画像がある場合のJSONへのパスのマッピング
   if(res.req.files.files){
