@@ -28,7 +28,7 @@ export default data => {
       })
 
       acc.push({
-        name: "imgPath",
+        name: "files",
         content: content.file
       })
 
