@@ -71,6 +71,10 @@ export default {
       const config = {　headers: {'content-type': 'multipart/form-data'}}
       const res = await this.$axios.$post("/update",data,config)
       this.data = initData(res.body.item.data);
+      this.$store.dispatch("items/updateItems",res.body.list)
+        .then(()=>{
+          this.$router.push("./");
+        })
 
     },
     doUpdateImage(e,index){
@@ -89,7 +93,7 @@ export default {
     changeRadio(value,index){
       this.data[index].type = value
     }
-  }
+  },
 }
 </script>
 

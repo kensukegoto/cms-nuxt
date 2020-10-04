@@ -14,16 +14,10 @@
 
 <script>
 export default {
-  asyncData(context) {
-
-    return context.app.$axios
-      .$get("/data/list.json")
-      .then(res => {
-        console.log(res)
-        return {
-          list: res
-        }
-      })
+  computed:{
+    list(){
+      return this.$store.state.items.items
+    }
   }
 }
 </script>

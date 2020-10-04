@@ -66,7 +66,8 @@ app.post("/update",(req,res) => {
       res.json({
         status: "success",
         body: {
-          item: body
+          item: body,
+          list: listJson
         }
       })
 
