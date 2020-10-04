@@ -1,5 +1,7 @@
 export default data => {
 
+  // console.log(data)
+
   let blocks = data.reduce((list,item,index)=> {
     if(item.tag === "p"){
       list[item.block] = !list[item.block] ? [] : list[item.block];

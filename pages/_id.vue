@@ -1,3 +1,106 @@
 <template>
-  <div>id</div>
+  <div id="app">
+    <draggable class="editor__body" tag="ul" ghost-class="draged" :list="data">
+      <li
+        class="sec"
+        v-for="(item,key) of data"
+        :key="key"
+      >
+        <div class="sec__inner">
+          <TextArea 
+            v-if="item.type === 'text'"
+            :content="item.content"
+            @doUpdate="e => {doUpdate(e,key)}"
+          />
+          <TitleArea 
+            v-if="/h2|h3/.test(item.type)"
+            :item="item"
+            @doUpdate="e => {doUpdate(e,key)}"
+            @changeRadio="e => {changeRadio(e,key)}"
+          />
+          <ImageArea 
+            v-if="/img/.test(item.type)"
+            :item="item"
+            @doUpdateImage="e => {doUpdateImage(e,key)}"
+          />
+
+        </div>
+      </li>
+    </draggable>
+    <section id="tools" class="b-tools">
+      <ul class="m-tools">
+        <li class="item"><a class="btn btn--add-title" @click="addTitle">タイトル追加</a></li>
+        <li class="item"><a class="btn btn--add-text" @click="addText">テキスト追加</a></li>
+        <li class="item"><a class="btn btn--add-image" @click="addImage">画像追加</a></li>
+        <li class="item"><a class="btn btn--save" @click="doSave">保存</a></li>
+      </ul>
+    </section>
+  </div>
 </template>
+
+<script>
+import draggable from 'vuedraggable'
+import doSave from "~/assets/js/doSave";
+import initData from "~/assets/js/initData"
+import myData from "~/assets/js/data"
+export default {
+
+  components:{
+    draggable
+  },
+  asyncData(context){
+    const id = context.params.id;
+    return context.app.$axios.$get(`/data/${id}.json`)
+      .then(res => {
+        return {
+          filename: id,
+          data: initData(res.data)
+        }
+      })
+
+  },
+  methods:{
+    doUpdate(value,index){
+      this.data[index].content = value
+    },
+    async doSave(){
+
+      const page = this.filename;
+      
+      const data = doSave(this.data,page);
+      for (let d of data.entries()) {
+        console.log(`${d[0]}: ${d[1]}`);
+      }
+      const config = {　headers: {'content-type': 'multipart/form-data'}}
+      const res = await this.$axios.$post("/update",data,config)
+      this.data = initData(res.body.item.data);
+
+    },
+    doUpdateImage(e,index){
+      this.data[index].content = e.base64;
+      this.data[index].file = e.file;
+    },
+    addText(){
+      this.data = [...this.data,{ type: "text", content: "", update: "" }]
+    },
+    addTitle(){
+      this.data = [...this.data,{ type: "h2", content: "", update: "" }]
+    },
+    addImage(){
+      this.data = [...this.data,{ type: "img", content: "", update: "" }]
+    },
+    changeRadio(value,index){
+      this.data[index].type = value
+    }
+  }
+}
+</script>
+
+<style scoped>
+.sec{
+  margin-top: 2em;
+}
+.draged{
+  opacity: .5;
+}
+</style>
