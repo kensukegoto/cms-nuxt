@@ -31,8 +31,10 @@ export default {
 <style lang="scss" scoped>
 ul{
   display: flex;
+  flex-wrap: wrap;
 }
 li {
+  margin-top: 16px;
   width: calc(50% - 8px);
   height: 100px;
   background: lightcyan;

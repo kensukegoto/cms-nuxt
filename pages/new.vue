@@ -51,10 +51,8 @@ export default {
   },
 
   data: () => {
-
-    const data = initData(myData);
     return {
-      data
+      data: []
     }
 
   },
