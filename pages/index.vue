@@ -1,12 +1,15 @@
 <template>
-  <ul>
-    <li 
-      v-for="(item,key) of list"
-      :key="key"
-    >
-      <nuxt-link :to="item.filename">{{ item.filename }}</nuxt-link>
-    </li>
-  </ul>
+  <div>
+    <nuxt-link to="new" class="btnLink">新規記事作成</nuxt-link>
+    <ul>
+      <li 
+        v-for="(item,key) of list"
+        :key="key"
+      >
+        <nuxt-link :to="item.filename">{{ item.filename }}</nuxt-link>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -50,4 +53,21 @@ li {
     align-items: center;
   }
 }
+
+.btnLink{
+  width: 100%;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #333;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  opacity: .9;
+  &:hover{
+    opacity: 1;
+  }
+}
+
 </style>
