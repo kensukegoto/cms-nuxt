@@ -1,104 +1,53 @@
 <template>
-  <div id="app">
-    <draggable class="editor__body" tag="ul" ghost-class="draged" :list="data">
-      <li
-        class="sec"
-        v-for="(item,key) of data"
-        :key="key"
-      >
-        <div class="sec__inner">
-          <TextArea 
-            v-if="item.type === 'text'"
-            :content="item.content"
-            @doUpdate="e => {doUpdate(e,key)}"
-          />
-          <TitleArea 
-            v-if="/h2|h3/.test(item.type)"
-            :item="item"
-            @doUpdate="e => {doUpdate(e,key)}"
-            @changeRadio="e => {changeRadio(e,key)}"
-          />
-          <ImageArea 
-            v-if="/img/.test(item.type)"
-            :item="item"
-            @doUpdateImage="e => {doUpdateImage(e,key)}"
-          />
-
-        </div>
-      </li>
-    </draggable>
-    <section id="tools" class="b-tools">
-      <ul class="m-tools">
-        <li class="item"><a class="btn btn--add-title" @click="addTitle">タイトル追加</a></li>
-        <li class="item"><a class="btn btn--add-text" @click="addText">テキスト追加</a></li>
-        <li class="item"><a class="btn btn--add-image" @click="addImage">画像追加</a></li>
-        <li class="item"><a class="btn btn--save" @click="doSave">保存</a></li>
-      </ul>
-    </section>
-  </div>
+  <ul>
+    <li 
+      v-for="(item,key) of list"
+      :key="key"
+    >
+      <nuxt-link :to="item.filename">{{ item.filename }}</nuxt-link>
+    </li>
+  </ul>
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-import doSave from "~/assets/js/doSave";
-import initData from "~/assets/js/initData"
-import myData from "~/assets/js/data"
 export default {
+  asyncData(context) {
 
-  components:{
-    draggable
-  },
-
-  data: () => {
-
-    const data = initData(myData);
-    return {
-      data
-    }
-
-  },
-  methods:{
-    doUpdate(value,index){
-      this.data[index].content = value
-    },
-    async doSave(){
-
-      const page = "";
-      
-      const data = doSave(this.data,page);
-      for (let d of data.entries()) {
-        console.log(`${d[0]}: ${d[1]}`);
-      }
-      const config = {　headers: {'content-type': 'multipart/form-data'}}
-      const res = await this.$axios.$post("/update",data,config)
-      this.data = initData(res.body.item.data);
-
-    },
-    doUpdateImage(e,index){
-      this.data[index].content = e.base64;
-      this.data[index].file = e.file;
-    },
-    addText(){
-      this.data = [...this.data,{ type: "text", content: "", update: "" }]
-    },
-    addTitle(){
-      this.data = [...this.data,{ type: "h2", content: "", update: "" }]
-    },
-    addImage(){
-      this.data = [...this.data,{ type: "img", content: "", update: "" }]
-    },
-    changeRadio(value,index){
-      this.data[index].type = value
-    }
+    return context.app.$axios
+      .$get("/data/list.json")
+      .then(res => {
+        console.log(res)
+        return {
+          list: res
+        }
+      })
   }
 }
 </script>
 
-<style scoped>
-.sec{
-  margin-top: 2em;
+<style lang="scss" scoped>
+ul{
+  display: flex;
 }
-.draged{
-  opacity: .5;
+li {
+  width: calc(50% - 8px);
+  height: 100px;
+  background: lightcyan;
+  margin-right: 16px;
+  cursor: pointer;
+  &:hover{
+    background: cyan;
+  }
+  &:nth-child(2n){
+    margin-right: 0;
+  }
+
+  a{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

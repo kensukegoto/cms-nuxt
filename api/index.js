@@ -4,6 +4,8 @@ const shapeData = require("./module/shape_data");
 const fs = require("fs");
 const app = express();
 
+app.use("/data",express.static(__dirname + "/data"));
+
 app.post("/update",(req,res) => {
 
   upload(req, res, (err) => {
