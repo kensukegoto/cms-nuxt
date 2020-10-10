@@ -6,7 +6,7 @@
         v-for="(item,key) of list"
         :key="key"
       >
-        <nuxt-link :to="item.filename">{{ item.filename }}</nuxt-link>
+        <nuxt-link :to="item.filename">{{ item.title }}</nuxt-link>
       </li>
     </ul>
   </div>

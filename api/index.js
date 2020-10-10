@@ -55,9 +55,17 @@ app.post("/update",(req,res) => {
       });
 
       if(index >= 0){
-        listJson.splice(index, 1, {filename});
+        listJson.splice(index, 1, {
+          filename,
+          title: body.title,
+          description: body.description,
+        });
       } else {
-        listJson.unshift({filename})
+        listJson.unshift({
+          filename,
+          title: body.title,
+          description: body.description,
+        })
       }
 
       fs.writeFile(`./api/data/list.json`, JSON.stringify(listJson),(err)=>{
