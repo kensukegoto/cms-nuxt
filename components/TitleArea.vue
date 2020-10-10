@@ -1,24 +1,27 @@
 <template>
-  <div>
-    <div
-      class="radio__box">
+  <div class="wrapper">
+    <div class="handle"></div>
+    <div class="editor">
+      <div
+        class="radio__box">
+        <input 
+          type="radio" 
+          value="h2"
+          @change="e => {changeRadio(e)}"
+          :checked="item.type==='h2'">中
+        <input 
+          type="radio" 
+          value="h3" 
+          @change="e => {changeRadio(e)}"
+          :checked="item.type==='h3'">小
+      </div>
       <input 
-        type="radio" 
-        value="h2"
-        @change="e => {changeRadio(e)}"
-        :checked="item.type==='h2'">中
-      <input 
-        type="radio" 
-        value="h3" 
-        @change="e => {changeRadio(e)}"
-        :checked="item.type==='h3'">小
+        type="text"
+        :class="item.type"
+        :value="item.content"
+        @input="e => {doUpdate(e.target.value)}"
+      />
     </div>
-    <input 
-      type="text"
-      :class="item.type"
-      :value="item.content"
-      @input="e => {doUpdate(e.target.value)}"
-    />
   </div> 
 </template>
 
@@ -36,7 +39,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.wrapper {
+  display: flex;
+  .handle{
+    cursor: move;
+    width: 32px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .editor{
+    width: calc(100% - 32px);
+  }
+}
 
 input[type="text"]{
   width: 100%;

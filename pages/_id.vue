@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <nuxt-link to="./" class="btnLink">一覧へ戻る</nuxt-link>
-    <draggable class="editor__body" tag="ul" ghost-class="draged" :list="data">
+    <draggable 
+    class="editor__body" 
+    tag="ul" 
+    ghost-class="draged" 
+    :list="data"
+    :options="{handle: '.handle'}">
       <li
         class="sec"
         v-for="(item,key) of data"

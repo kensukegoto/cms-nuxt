@@ -1,16 +1,21 @@
 <template>
-  <div 
-    class="imageArea"
-    v-if="item.type === 'img'"
-  >
-    <figure class="imageArea__image">
-      <img :src="item.content || 'image/noimage.png'" alt="">
-    </figure>
-    <div class="imageArea__upload">
-      <p>
-        <input type="file" @change="e => { doUpdate(e) }">
-        <span>ファイルを選択</span>
-      </p>
+  <div class="wrapper">
+    <div class="handle"></div>
+    <div class="editor">
+      <div 
+        class="imageArea"
+        v-if="item.type === 'img'"
+      >
+        <figure class="imageArea__image">
+          <img :src="item.content || 'image/noimage.png'" alt="">
+        </figure>
+        <div class="imageArea__upload">
+          <p>
+            <input type="file" @change="e => { doUpdate(e) }">
+            <span>ファイルを選択</span>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +44,22 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.wrapper {
+  display: flex;
+  .handle{
+    cursor: move;
+    width: 32px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .editor{
+    width: calc(100% - 32px);
+  }
+}
+
 .imageArea{
 
   background: #fff;
@@ -46,6 +67,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  border: 1px solid #ccc;
 
   &__image{
     width: 50%;

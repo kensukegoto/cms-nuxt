@@ -1,12 +1,15 @@
 <template>
-  <div>
-    <editor
-      :api-key="apiKey"
-      :init="init"
-      :initialValue="content"
-      @onKeyUp="handlerFunction"
-      @onExecCommand="handlerFunction"
-    />
+  <div class="wrapper">
+    <div class="handle"></div>
+    <div class="editor">
+      <editor
+        :api-key="apiKey"
+        :init="init"
+        :initialValue="content"
+        @onKeyUp="handlerFunction"
+        @onExecCommand="handlerFunction"
+      />
+    </div>
   </div>
 </template>
 
@@ -119,3 +122,20 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.wrapper {
+  display: flex;
+  .handle{
+    cursor: move;
+    width: 32px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .editor{
+    width: calc(100% - 32px);
+  }
+}
+</style>
