@@ -28,6 +28,7 @@
             v-if="/img/.test(item.type)"
             :item="item"
             @doUpdateImage="e => {doUpdateImage(e,key)}"
+            @doUpdateCaption="e => {doUpdateCaption(e,key)}"
           />
 
         </div>
@@ -69,6 +70,9 @@ export default {
     doUpdate(value,index){
       this.data[index].content = value
     },
+    doUpdateCaption(value,index){
+      this.data[index].content2 = value
+    },
     async doSave(){
 
       const page = this.filename;
@@ -92,13 +96,13 @@ export default {
       this.data[index].file = e.file;
     },
     addText(){
-      this.data = [...this.data,{ type: "text", content: "", update: "" }]
+      this.data = [...this.data,{ type: "text", content: "", content2: "" }]
     },
     addTitle(){
-      this.data = [...this.data,{ type: "h2", content: "", update: "" }]
+      this.data = [...this.data,{ type: "h2", content: "", content2: "" }]
     },
     addImage(){
-      this.data = [...this.data,{ type: "img", content: "", update: "" }]
+      this.data = [...this.data,{ type: "img", content: "", content2: "" }]
     },
     changeRadio(value,index){
       this.data[index].type = value

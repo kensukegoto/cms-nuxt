@@ -6,7 +6,7 @@ module.exports = res => {
   
   const header = ["filename"];
 
-  body = Object.keys(body).reduce((acc,k) => {
+  body = Object.keys(body).reduce((acc,k,i) => {
 
     const [tag,block,className] = k.split("__");
 
@@ -17,10 +17,12 @@ module.exports = res => {
 
     if(Array.isArray(body[k])){
       body[k].forEach(item => {
-        acc.data.push({ tag, block, class: className || "", content : item})
+        acc.data.push({ tag, block, class: className || "", content : item, content2 : ""})
       })
+    } else if (tag === "figcaption"){
+      acc.data[i - 1].content2 = body[k]
     } else {
-      acc.data.push({ tag, block, class: className || "", content : body[k]})
+      acc.data.push({ tag, block, class: className || "", content : body[k], content2 : ""})
     }
 
     return acc;

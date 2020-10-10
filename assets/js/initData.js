@@ -16,6 +16,7 @@ export default data => {
   blocks = blocks.reduce((list,block) => {
 
     let value = "";
+    let value2 = "";
     let type = "";
 
     if(Array.isArray(block)){
@@ -29,9 +30,10 @@ export default data => {
     } else if (/h2|h3|img/.test(block.tag)){
       type = block.tag;
       value += `${block.content}`;
+      value2 += block.content2;
     } 
 
-    list.push({ type, content: value, file: null });
+    list.push({ type, content: value, content2: value2, file: null });
     return list;
 
   },[])

@@ -9,10 +9,17 @@
         <figure class="imageArea__image">
           <img :src="item.content || 'image/noimage.png'" alt="">
         </figure>
-        <div class="imageArea__upload">
-          <p>
+        <div class="imageArea__tool">
+          <p class="upload">
             <input type="file" @change="e => { doUpdate(e) }">
             <span>ファイルを選択</span>
+          </p>
+          <p class="caption">
+            <input 
+              type="text" 
+              placeholder="キャプション" 
+              :value="item.content2"
+              @input="e => {doUpdateCaption(e.target.value)}">
           </p>
         </div>
       </div>
@@ -37,6 +44,9 @@ export default {
         })
       };
       reader.readAsDataURL(files[0]);
+    },
+    doUpdateCaption(e){
+      this.$emit("doUpdateCaption",e);
     }
   }
 }
@@ -75,9 +85,9 @@ export default {
       max-width: 100%;
     }
   }
-  &__upload{
+  &__tool{
     width: calc(50% - 8px );
-    p{
+    .upload{
       position: relative;
       height: 100px;
       background: #efefef;
@@ -95,6 +105,12 @@ export default {
         &:focus{
           outline: none;
         }
+      }
+    }
+    .caption{
+      margin-top: 8px;
+      input {
+        width: 100%;
       }
     }
   }

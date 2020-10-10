@@ -20,6 +20,7 @@ app.post("/update",(req,res) => {
 
       const body = shapeData(res);
 
+
       // 一覧
       const listJson = JSON.parse(fs.readFileSync('./api/data/list.json', 'utf8'));
 

@@ -13,7 +13,7 @@ export default (data,page) => {
         const className = item.className ? `__${item.className}` : "";
         acc.push({
           name:`${item.tagName.toLowerCase()}__${block}${className}`,
-          content: item.innerHTML
+          content: item.innerHTML,
         })
       })
 
@@ -24,7 +24,12 @@ export default (data,page) => {
 
       acc.push({
         name:`${content.type.toLowerCase()}__${block}`,
-        content: ""
+        content: "",
+      })
+
+      acc.push({
+        name:`figcaption__${block}`,
+        content: content.content2,
       })
 
       acc.push({
@@ -36,10 +41,18 @@ export default (data,page) => {
     }
 
     const className = content.className ? `__${content.className}` : "";
+
     acc.push({
       name:`${content.type.toLowerCase()}__${block}${className}`,
-      content: content.content
+      content: content.content,
     })
+
+    if(content.type === "img"){
+      acc.push({
+        name:`figcaption__${block}`,
+        content: content.content2,
+      })
+    }
 
     return acc;
 
