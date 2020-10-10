@@ -6,7 +6,7 @@
         <input 
           class="input" 
           type="text"
-          @input="e => {doUpdate(e.target.value,'titile')}"
+          @input="e => {doUpdate(e.target.value,'title')}"
         ></p>
     </li>
     <li>
