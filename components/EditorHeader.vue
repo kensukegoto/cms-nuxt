@@ -6,6 +6,7 @@
         <input 
           class="input" 
           type="text"
+          :value="title || ''"
           @input="e => {doUpdate(e.target.value,'title')}"
         ></p>
     </li>
@@ -14,6 +15,7 @@
       <p>
         <textarea 
           class="input"
+          :value="description || ''"
           @input="e => {doUpdate(e.target.value,'description')}"
         ></textarea></p>
     </li>
@@ -22,6 +24,7 @@
 
 <script>
 export default {
+  props: ["title","description"],
   methods:{
     doUpdate(e,type){
       this.$emit("doUpdate",e,type)

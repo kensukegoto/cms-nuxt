@@ -1,6 +1,11 @@
 <template>
   <div id="app">
     <nuxt-link to="./" class="btnLink">一覧へ戻る</nuxt-link>
+    <EditorHeader
+      :title="title"
+      :description="description"
+      @doUpdate="(e,type)=> {doUpdateMeta(e,type)}"
+    />
     <draggable 
     class="editor__body" 
     tag="ul" 
@@ -61,12 +66,18 @@ export default {
       .then(res => {
         return {
           filename: id,
+          title: res.title,
+          description: res.description,
           data: initData(res.data)
         }
       })
 
   },
   methods:{
+    doUpdateMeta(value,key){
+      this[key] = value;
+      // this.data[index].content = value
+    },
     doUpdate(value,index){
       this.data[index].content = value
     },
@@ -77,7 +88,12 @@ export default {
 
       const page = this.filename;
       
-      const data = doSave(this.data,page);
+      const data = doSave({
+        title: this.title,
+        description: this.description,
+        data: this.data,
+        page
+      });
       for (let d of data.entries()) {
         console.log(`${d[0]}: ${d[1]}`);
       }
