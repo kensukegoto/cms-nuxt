@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <nuxt-link to="./" class="btnLink">一覧へ戻る</nuxt-link>
+    <EditorHeader
+      @doUpdate="(e,type)=> {doUpdateMeta(e,type)}"
+    />
     <draggable 
     class="editor__body" 
     tag="ul" 
@@ -58,11 +61,17 @@ export default {
 
   data: () => {
     return {
+      title: "",
+      description: "",
       data: []
     }
 
   },
   methods:{
+    doUpdateMeta(value,key){
+      this[key] = value;
+      // this.data[index].content = value
+    },
     doUpdate(value,index){
       this.data[index].content = value
     },
@@ -71,12 +80,17 @@ export default {
     },
     async doSave(){
 
-      const page = "";
-      
-      const data = doSave(this.data,page);
+      const data = doSave({
+        title: this.title,
+        description: this.description,
+        data: this.data,
+        page : ""
+      });
+
       for (let d of data.entries()) {
         console.log(`${d[0]}: ${d[1]}`);
       }
+      
       const config = {　headers: {'content-type': 'multipart/form-data'}}
       const res = await this.$axios.$post("/update",data,config)
       this.data = initData(res.body.item.data);

@@ -4,7 +4,7 @@ module.exports = res => {
   // 受け取ったデータを整形
   let body = res.req.body;
   
-  const header = ["filename"];
+  const header = ["filename","title","description"];
 
   body = Object.keys(body).reduce((acc,k,i) => {
 
