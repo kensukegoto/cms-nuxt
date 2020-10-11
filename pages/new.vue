@@ -1,68 +1,48 @@
 <template>
   <div id="app">
     <nuxt-link to="./" class="btnLink">一覧へ戻る</nuxt-link>
-    <EditorHeader
+
+    <bMeta 
       :title="title"
       :description="description"
       :ogImage="ogImage"
       @doUpdate="(e,type)=> {doUpdateMeta(e,type)}"
     />
-    <draggable 
-    class="editor__body" 
-    tag="ul" 
-    ghost-class="draged"
-    :list="data"
-    :options="{handle: '.handle'}"
-    >
-      <li
-        class="sec"
-        v-for="(item,key) of data"
-        :key="key"
-      >
-        <div class="sec__inner">
-          <TextArea 
-            v-if="item.type === 'text'"
-            :content="item.content"
-            @doUpdate="e => {doUpdate(e,key)}"
-            @doDelete="() => {doDelete(key)}"
-          />
-          <TitleArea 
-            v-if="/h2|h3/.test(item.type)"
-            :item="item"
-            @doUpdate="e => {doUpdate(e,key)}"
-            @changeRadio="e => {changeRadio(e,key)}"
-            @doDelete="() => {doDelete(key)}"
-          />
-          <ImageArea 
-            v-if="/img/.test(item.type)"
-            :item="item"
-            @doUpdateImage="e => {doUpdateImage(e,key)}"
-            @doDelete="() => {doDelete(key)}"
-          />
 
-        </div>
-      </li>
-    </draggable>
-    <section id="tools" class="b-tools">
-      <ul class="m-tools">
-        <li class="item"><a class="btn btn--add-title" @click="addTitle">タイトル追加</a></li>
-        <li class="item"><a class="btn btn--add-text" @click="addText">テキスト追加</a></li>
-        <li class="item"><a class="btn btn--add-image" @click="addImage">画像追加</a></li>
-        <li class="item"><a class="btn btn--save" @click="doSave">保存</a></li>
-      </ul>
-    </section>
+    <bBody 
+      :data="data"
+      @doUpdate="(e,key) => doUpdate(e,key)"
+      @doUpdateImage="(e,key) => doUpdateImage(e,key)"
+      @changeRadio="(e,key) => changeRadio(e,key)"
+      @doDelete="key => doDelete(key)"
+    />
+
+    <bTools
+      id="tools" 
+      class="b-tools"
+      @addTitle="addTitle"
+      @addText="addText"
+      @addImage="addImage"
+      @doSave="doSave"
+    />
+
   </div>
+
 </template>
 
 <script>
-import draggable from 'vuedraggable'
+import bMeta from "~/components/block/b-meta"
+import bTools from "~/components/block/b-tools"
+import bBody from "~/components/block/b-body"
 import doSave from "~/assets/js/doSave";
 import initData from "~/assets/js/initData"
 import myData from "~/assets/js/data"
 export default {
 
   components:{
-    draggable
+    bMeta,
+    bTools,
+    bBody
   },
 
   data: () => {

@@ -22,12 +22,16 @@
         @input="e => {doUpdate(e.target.value)}"
       />
     </div>
-    <ToolBox class="toolbox" @doDelete="doDelete" />
+    <mToolBox class="toolbox" @doDelete="doDelete" />
   </div> 
 </template>
 
 <script>
+import mToolBox from "~/components/module/m-toolBox"
 export default {
+  components:{
+    mToolBox
+  },
   props: [ "item" ],
   methods:{
     changeRadio(e){

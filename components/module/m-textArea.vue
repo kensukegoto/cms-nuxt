@@ -10,16 +10,18 @@
         @onExecCommand="handlerFunction"
       />
     </div>
-    <ToolBox class="toolbox" @doDelete="doDelete" />
+    <mToolBox class="toolbox" @doDelete="doDelete" />
   </div>
 </template>
 
 <script>
+import mToolBox from "~/components/module/m-toolBox"
 import Editor from '@tinymce/tinymce-vue'
 
 export default {
   name: 'app',
   components: {
+    mToolBox,
     'editor': Editor
   },
   methods: {

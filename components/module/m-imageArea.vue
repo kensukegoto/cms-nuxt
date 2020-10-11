@@ -23,12 +23,16 @@
         </div>
       </div>
     </div>
-    <ToolBox v-if="type!=='thumbnail'" @doDelete="doDelete" />
+    <mToolBox v-if="type!=='thumbnail'" @doDelete="doDelete" />
   </div>
 </template>
 
 <script>
+import mToolBox from "~/components/module/m-toolBox"
 export default {
+  components:{
+    mToolBox
+  },
   props: [ "item","type" ],
   methods:{
     doDelete(){

@@ -21,7 +21,7 @@
     </li>
     <li>
       <p>サムネイル</p>
-      <ImageArea
+      <mImageArea
       type="thumbnail"
       :item="ogImage" 
       @doUpdateImage="e => {doUpdate(e,'ogImage')}"
@@ -31,7 +31,11 @@
 </template>
 
 <script>
+import mImageArea from "~/components/module/m-imageArea"
 export default {
+  components:{
+    mImageArea
+  },
   props: ["title","description","ogImage"],
   methods:{
     doUpdate(e,type){
