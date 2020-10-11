@@ -15,4 +15,4 @@ const storage = multer.diskStorage({
 
 module.exports = multer({
   storage: storage
-}).fields([{name:'files'},{name:'imgPath'}])
+}).fields([{name:'files'},{name:'ogImageFiles'}])

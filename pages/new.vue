@@ -2,6 +2,9 @@
   <div id="app">
     <nuxt-link to="./" class="btnLink">一覧へ戻る</nuxt-link>
     <EditorHeader
+      :title="title"
+      :description="description"
+      :ogImage="ogImage"
       @doUpdate="(e,type)=> {doUpdateMeta(e,type)}"
     />
     <draggable 
@@ -63,13 +66,22 @@ export default {
     return {
       title: "",
       description: "",
+      ogImage: {content:null,file:null},
       data: []
     }
 
   },
   methods:{
     doUpdateMeta(value,key){
-      this[key] = value;
+
+      if(key !== "ogImage"){
+        this[key] = value;
+        return;
+      } 
+
+      this[key].content =  value.base64;;
+      this[key].file = value.file;
+      
       // this.data[index].content = value
     },
     doUpdate(value,index){
@@ -83,6 +95,7 @@ export default {
       const data = doSave({
         title: this.title,
         description: this.description,
+        ogImage: this.ogImage,
         data: this.data,
         page : ""
       });

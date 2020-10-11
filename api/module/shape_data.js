@@ -4,11 +4,13 @@ module.exports = res => {
   // 受け取ったデータを整形
   let body = res.req.body;
   
-  const header = ["filename","title","description"];
+  const header = ["filename","title","description","ogImage"];
 
   body = Object.keys(body).reduce((acc,k,i) => {
 
     const [tag,block,className] = k.split("__");
+
+    console.log(tag)
 
     if(header.includes(tag)) {
       acc[k] = body[k]
@@ -20,7 +22,7 @@ module.exports = res => {
         acc.data.push({ tag, block, class: className || "", content : item, content2 : ""})
       })
     } else if (tag === "figcaption"){
-      acc.data[i - 1].content2 = body[k]
+      acc.data[acc.data.length - 1].content2 = body[k]
     } else {
       acc.data.push({ tag, block, class: className || "", content : body[k], content2 : ""})
     }
@@ -29,6 +31,10 @@ module.exports = res => {
   },{
     data:[]
   });
+
+  if(res.req.files.ogImageFiles){
+    body.ogImage = res.req.files.ogImageFiles[0].filename;
+  }
 
   // 画像がある場合のJSONへのパスのマッピング
   if(res.req.files.files){

@@ -4,6 +4,7 @@
     <EditorHeader
       :title="title"
       :description="description"
+      :ogImage="ogImage"
       @doUpdate="(e,type)=> {doUpdateMeta(e,type)}"
     />
     <draggable 
@@ -67,6 +68,7 @@ export default {
         return {
           filename: id,
           title: res.title,
+          ogImage: {content: res.ogImage, file : null},
           description: res.description,
           data: initData(res.data)
         }
@@ -75,8 +77,13 @@ export default {
   },
   methods:{
     doUpdateMeta(value,key){
-      this[key] = value;
-      // this.data[index].content = value
+      if(key !== "ogImage"){
+        this[key] = value;
+        return;
+      } 
+
+      this[key].content =  value.base64;;
+      this[key].file = value.file;
     },
     doUpdate(value,index){
       this.data[index].content = value
@@ -91,12 +98,15 @@ export default {
       const data = doSave({
         title: this.title,
         description: this.description,
+        ogImage: this.ogImage,
         data: this.data,
         page
       });
+
       for (let d of data.entries()) {
         console.log(`${d[0]}: ${d[1]}`);
       }
+
       const config = {　headers: {'content-type': 'multipart/form-data'}}
       const res = await this.$axios.$post("/update",data,config)
       this.data = initData(res.body.item.data);

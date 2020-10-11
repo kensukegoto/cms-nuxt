@@ -1,10 +1,15 @@
-export default ({ title,description,data,page }) => {
+export default ({ title,description,ogImage,data,page }) => {
 
   let tmpData = [];
 
   tmpData.push({name:"title",content: title || ""});
   tmpData.push({name:"description",content: description || ""});
-  console.log(data)
+  if(ogImage.file){
+    tmpData.push({name:"ogImage",content: ""});
+    tmpData.push({name:"ogImageFiles",content: ogImage.file });
+  } else {
+    tmpData.push({name:"ogImage",content: ogImage.content});
+  }
 
   if(data){
     tmpData = data

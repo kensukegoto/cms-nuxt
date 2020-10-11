@@ -19,12 +19,20 @@
           @input="e => {doUpdate(e.target.value,'description')}"
         ></textarea></p>
     </li>
+    <li>
+      <p>サムネイル</p>
+      <ImageArea
+      type="thumbnail"
+      :item="ogImage" 
+      @doUpdateImage="e => {doUpdate(e,'ogImage')}"
+      />
+    </li>
   </ul>
 </template>
 
 <script>
 export default {
-  props: ["title","description"],
+  props: ["title","description","ogImage"],
   methods:{
     doUpdate(e,type){
       this.$emit("doUpdate",e,type)

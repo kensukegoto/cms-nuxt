@@ -1,10 +1,9 @@
 <template>
   <div class="wrapper">
-    <div class="handle"></div>
+    <div v-if="type!=='thumbnail'" class="handle"></div>
     <div class="editor">
       <div 
         class="imageArea"
-        v-if="item.type === 'img'"
       >
         <figure class="imageArea__image">
           <img :src="item.content || 'image/noimage.png'" alt="">
@@ -14,7 +13,7 @@
             <input type="file" @change="e => { doUpdate(e) }">
             <span>ファイルを選択</span>
           </p>
-          <p class="caption">
+          <p class="caption"  v-if="type!=='thumbnail'">
             <input 
               type="text" 
               placeholder="キャプション" 
@@ -29,7 +28,7 @@
 
 <script>
 export default {
-  props: [ "item" ],
+  props: [ "item","type" ],
   methods:{
 
     doUpdate(e){
