@@ -24,17 +24,20 @@
             v-if="item.type === 'text'"
             :content="item.content"
             @doUpdate="e => {doUpdate(e,key)}"
+            @doDelete="() => {doDelete(key)}"
           />
           <TitleArea 
             v-if="/h2|h3/.test(item.type)"
             :item="item"
             @doUpdate="e => {doUpdate(e,key)}"
             @changeRadio="e => {changeRadio(e,key)}"
+            @doDelete="() => {doDelete(key)}"
           />
           <ImageArea 
             v-if="/img/.test(item.type)"
             :item="item"
             @doUpdateImage="e => {doUpdateImage(e,key)}"
+            @doDelete="() => {doDelete(key)}"
           />
 
         </div>
@@ -72,6 +75,9 @@ export default {
 
   },
   methods:{
+    doDelete(index){
+      this.data.splice(index,1);
+    },
     doUpdateMeta(value,key){
 
       if(key !== "ogImage"){

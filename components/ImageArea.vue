@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div v-if="type!=='thumbnail'" class="handle"></div>
-    <div class="editor">
+    <div class="editor" :class="{'editor--full': type === 'thumbnail'}">
       <div 
         class="imageArea"
       >
@@ -23,6 +23,7 @@
         </div>
       </div>
     </div>
+    <ToolBox v-if="type!=='thumbnail'" @doDelete="doDelete" />
   </div>
 </template>
 
@@ -30,7 +31,9 @@
 export default {
   props: [ "item","type" ],
   methods:{
-
+    doDelete(){
+      this.$emit("doDelete");
+    },
     doUpdate(e){
       let files = e.target.files || e.dataTransfer.files;
       if(files.length === 0) return;
@@ -65,7 +68,13 @@ export default {
     align-items: center;
   }
   .editor{
-    width: calc(100% - 32px);
+    width: calc(100% - 32px - 60px);
+    &--full{
+      width: 100%;
+    }
+  }
+  .toolbox {
+    width: 60px;
   }
 }
 

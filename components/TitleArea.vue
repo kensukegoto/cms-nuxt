@@ -22,6 +22,7 @@
         @input="e => {doUpdate(e.target.value)}"
       />
     </div>
+    <ToolBox class="toolbox" @doDelete="doDelete" />
   </div> 
 </template>
 
@@ -34,6 +35,9 @@ export default {
     },
     doUpdate(e){
       this.$emit("doUpdate",e);
+    },
+    doDelete(){
+      this.$emit("doDelete");
     }
   }
 }
@@ -51,7 +55,10 @@ export default {
     align-items: center;
   }
   .editor{
-    width: calc(100% - 32px);
+    width: calc(100% - 32px - 60px);
+  }
+  .toolbox {
+    width: 60px;
   }
 }
 

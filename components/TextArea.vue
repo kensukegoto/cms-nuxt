@@ -10,6 +10,7 @@
         @onExecCommand="handlerFunction"
       />
     </div>
+    <ToolBox class="toolbox" @doDelete="doDelete" />
   </div>
 </template>
 
@@ -22,7 +23,9 @@ export default {
     'editor': Editor
   },
   methods: {
-
+    doDelete(){
+      this.$emit("doDelete");
+    },
     handlerFunction(event,editor){
       let content;
       if(event.type === "keyup"){
@@ -135,7 +138,10 @@ export default {
     align-items: center;
   }
   .editor{
-    width: calc(100% - 32px);
+    width: calc(100% - 32px - 60px);
+  }
+  .toolbox {
+    width: 60px;
   }
 }
 </style>
