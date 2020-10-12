@@ -49,7 +49,7 @@ export default {
     return {
       title: "",
       description: "",
-      ogImage: {content:null,file:null},
+      ogImage: {content: "",file: null},
       data: []
     }
 

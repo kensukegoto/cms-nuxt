@@ -10,8 +10,6 @@ module.exports = res => {
 
     const [tag,block,className] = k.split("__");
 
-    console.log(tag)
-
     if(header.includes(tag)) {
       acc[k] = body[k]
       return acc;
