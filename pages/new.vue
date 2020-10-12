@@ -6,24 +6,25 @@
       :title="title"
       :description="description"
       :ogImage="ogImage"
-      @doUpdate="(e,type)=> {doUpdateMeta(e,type)}"
+      @doUpdate="(val,type)=> call('doUpdateMeta',{val,type})"
     />
 
     <bBody 
       :data="data"
-      @doUpdate="(e,key) => doUpdate(e,key)"
-      @doUpdateImage="(e,key) => doUpdateImage(e,key)"
-      @changeRadio="(e,key) => changeRadio(e,key)"
-      @doDelete="key => doDelete(key)"
+      @doUpdate="(val,key) => call('doUpdate',{val,key})"
+      @doUpdateCaption="(val,key) => call('doUpdateCaption',{val,key})"
+      @doUpdateImage="(val,key) => call('doUpdateImage',{val,key})"
+      @changeRadio="(val,key) => call('changeRadio',{val,key})"
+      @doDelete="key => call('doDelete',{key})"
     />
 
     <bTools
       id="tools" 
       class="b-tools"
-      @addTitle="addTitle"
-      @addText="addText"
-      @addImage="addImage"
-      @doSave="doSave"
+      @addTitle="() => call('addTitle')"
+      @addText="() => call('addText')"
+      @addImage="() => call('addImage')"
+      @doSave="() => call('doSave')"
     />
 
   </div>
@@ -34,9 +35,12 @@
 import bMeta from "~/components/block/b-meta"
 import bTools from "~/components/block/b-tools"
 import bBody from "~/components/block/b-body"
-import doSave from "~/assets/js/doSave";
+
 import initData from "~/assets/js/initData"
 import myData from "~/assets/js/data"
+
+import execute from "~/assets/js/methods";
+
 export default {
 
   components:{
@@ -54,68 +58,13 @@ export default {
     }
 
   },
-  methods:{
-    doDelete(index){
-      this.data.splice(index,1);
-    },
-    doUpdateMeta(value,key){
+  methods: {
 
-      if(key !== "ogImage"){
-        this[key] = value;
-        return;
-      } 
-
-      this[key].content =  value.base64;;
-      this[key].file = value.file;
-      
-      // this.data[index].content = value
-    },
-    doUpdate(value,index){
-      this.data[index].content = value
-    },
-    doUpdateCaption(value,index){
-      this.data[index].content2 = value
-    },
-    async doSave(){
-
-      const data = doSave({
-        title: this.title,
-        description: this.description,
-        ogImage: this.ogImage,
-        data: this.data,
-        page : ""
-      });
-
-      for (let d of data.entries()) {
-        console.log(`${d[0]}: ${d[1]}`);
-      }
-      
-      const config = {　headers: {'content-type': 'multipart/form-data'}}
-      const res = await this.$axios.$post("/update",data,config)
-      this.data = initData(res.body.item.data);
-      this.$store.dispatch("items/updateItems",res.body.list)
-        .then(()=>{
-          this.$router.push("./");
-        })
-
-    },
-    doUpdateImage(e,index){
-      this.data[index].content = e.base64;
-      this.data[index].file = e.file;
-    },
-    addText(){
-      this.data = [...this.data,{ type: "text", content: "", content2: "" }]
-    },
-    addTitle(){
-      this.data = [...this.data,{ type: "h2", content: "", content2: "" }]
-    },
-    addImage(){
-      this.data = [...this.data,{ type: "img", content: "", content2: "" }]
-    },
-    changeRadio(value,index){
-      this.data[index].type = value
+    call(method,arg){
+      execute(method,arg,this,"")
     }
-  },
+
+  }
 }
 </script>
 
