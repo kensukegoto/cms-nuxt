@@ -29,6 +29,7 @@
           v-if="/img/.test(item.type)"
           :item="item"
           @doUpdateImage="e => doUpdateImage(e,key)"
+          @doUpdateCaption="e => doUpdateCaption(e,key)"
           @doDelete="() => doDelete(key)"
         />
 
@@ -63,6 +64,9 @@ export default {
     },
     doUpdateImage(e,key){
       this.$emit("doUpdateImage",e,key);
+    },
+    doUpdateCaption(e,key){
+      this.$emit("doUpdateCaption",e,key);
     }
   }
 }
